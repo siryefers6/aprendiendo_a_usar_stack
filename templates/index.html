@@ -90,63 +90,39 @@
 </section>
 
 <section>
-    <form hx-post="/procesar"
-          hx-encoding="multipart/form-data"
-          hx-target="#resultado_procesar"
-          hx-swap="innerHTML"
-          class="max-w-md space-y-4">
-
-        <input type="file"
-               name="file"
-               accept=".csv,.xlsx"
-               class="block w-full rounded border p-2">
-
-        <button type="submit"
-                hx-disabled-elt="this"
-                class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50">
-            Procesar archivo
-        </button>
-    </form>
-
-    <div id="resultado_procesar"
-         class="mt-6"></div>
+       <form hx-post="/procesar"
+             hx-target="#resultado_procesar"
+             hx-swap="innerHTML"
+             enctype="multipart/form-data"
+             class="max-w-md space-y-4"> <input type="file"
+                     name="file"
+                     accept=".csv,.xlsx"
+                     class="block w-full rounded border p-2"> <button type="submit"
+                      class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"> Procesar
+                     archivo </button> </form>
+       <div id="resultado_procesar"
+            class="mt-6"></div>
 </section>
-
-
 <section>
-    <form hx-post="/procesar_retornar"
-          hx-encoding="multipart/form-data"
-          class="max-w-md space-y-4">
-
-        <input type="file"
-               name="file"
-               accept=".xlsx"
-               class="block w-full rounded border p-2">
-
-        <button type="submit"
-                hx-disabled-elt="this"
-                class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50">
-            Procesar y retornar xlsx
-        </button>
-    </form>
+       <form action="/procesar_retornar"
+             method="post"
+             enctype="multipart/form-data"
+             class="max-w-md space-y-4"> <input type="file"
+                     name="file"
+                     accept=".csv,.xlsx"
+                     class="block w-full rounded border p-2"> <button type="submit"
+                      class="rounded bg-blue-600 px-4 py-2 text-white"> Procesar y retornar xlsx
+              </button> </form>
 </section>
-
-
 <section>
-    <form hx-post="/procesar_csv"
-          hx-encoding="multipart/form-data"
-          class="max-w-md space-y-4">
-
-        <input type="file"
-               name="file"
-               accept=".csv"
-               class="block w-full rounded border p-2">
-
-        <button type="submit"
-                hx-disabled-elt="this"
-                class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50">
-            Procesar y retornar csv
-        </button>
-    </form>
+       <form action="/procesar_csv"
+             method="post"
+             enctype="multipart/form-data"
+             class="max-w-md space-y-4"> <input type="file"
+                     name="file"
+                     accept=".csv,.xlsx"
+                     class="block w-full rounded border p-2"> <button type="submit"
+                      class="rounded bg-blue-600 px-4 py-2 text-white"> Procesar y retornar csv
+              </button> </form>
 </section>
 {% endblock %}
