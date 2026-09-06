@@ -1,0 +1,13 @@
+{% macro button(text, id_etiqueta_resultado, variant="primary") %}
+<button hx-get="/hola"
+        hx-target="{{ id_etiqueta_resultado }}"
+        hx-swap="innerHTML"
+        class="px-4 py-2 rounded-lg font-medium transition-colors col-span-6
+            {% if variant == 'primary' %}
+            bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800
+            {% elif variant == 'danger' %}
+            bg-red-600 text-white hover:bg-red-700 active:bg-red-800
+            {% endif %}">
+    {{ text }}
+</button>
+{% endmacro %}

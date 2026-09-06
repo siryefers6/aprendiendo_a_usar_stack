@@ -1,0 +1,14 @@
+{
+    "djlint.showInstallError": false,
+    "jinja2-html-enhancer.customVariables": {
+        "/home/siryefers/github/fast_api_learning/templates/index.html": [
+            "titulo",
+            "fecha_actual",
+            "client_ip"
+        ],
+        "/home/siryefers/github/fast_api_learning/templates/components/button.html": [
+            "id_etiqueta_resultado",
+            "text"
+        ]
+    }
+}

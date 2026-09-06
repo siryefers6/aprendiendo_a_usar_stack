@@ -1,0 +1,30 @@
+[project]
+name = "fast-api-learning"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Yeferson Bermúdez", email = "siryefers6@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi[standard]>=0.141.1",
+    "jinja2>=3.1.6",
+    "openpyxl>=3.1.5",
+    "pandas>=3.0.5",
+    "python-multipart>=0.0.32",
+    "sqlmodel>=0.0.42",
+    "uvicorn>=0.52.4",
+]
+
+[project.scripts]
+fast-api-learning = "fast_api_learning:main"
+
+[build-system]
+requires = ["uv_build>=0.12.9,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "djlint>=1.45.2",
+]

@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% from "components/button.html" import button %}
+{% block content %}
+<section>
+       <div class="grid grid-cols-6 gap-2">
+              <div class="bg-slate-200 text-center text-xl col-span-2">{{ fecha_actual }}</div>
+              <div class="bg-slate-200 text-center text-xl col-span-6">{{ titulo }}</div>
+              <div class="bg-slate-200 text-center text-xl col-span-6">INGREDIENTES</div>
+
+              {% for ingrediente in ingredientes %}
+
+              {% if "p" in ingrediente %}
+              <div class="bg-blue-400 text-center text-xl">{{ ingrediente | upper }}</div>
+              {% else %}
+              <div class="bg-green-500 text-center text-xl">{{ ingrediente | lower }}</div>
+              {% endif %}
+
+              {% endfor %}
+
+              {{ button('Saludar', '#resultado') }}
+       </div>
+       <div id="resultado"></div>
+</section>
+
+<section>
+       <form hx-post="/contestar"
+             hx-target="#respuesta_contestar"
+             hx-swap="innerHTML"
+             class="mt-2 p-2 grid grid-cols-6 bg-gray-400 gap-2">
+              <label for="nombre">Nombre:</label>
+              <input type="text"
+                     name="nombre"
+                     id="nombre"
+                     class="border border-black bg-white">
+              <label for="edad">Edad:</label>
+              <input type="number"
+                     name="edad"
+                     id="edad"
+                     class="border border-black bg-white">
+              <button type="submit"
+                      class="bg-green-500 cursor-pointer border col-span-6">Enviar</button>
+       </form>
+       <div id="respuesta_contestar"></div>
+</section>
+
+<section>
+       <h1 class="text-center font-bold text-3xl">Agregar producto</h1>
+       <form class="grid grid-cols-1 px-8 gap-2"
+             hx-post="/products"
+             hx-target="#respuesta_crear_producto"
+             hx-swap="innerHTML">
+              <label for="name">Nombre:</label>
+              <input class="border"
+                     type="text"
+                     id="name"
+                     name="name"
+                     required>
+
+              <label for="price">Precio:</label>
+              <input class="border"
+                     type="number"
+                     id="price"
+                     name="price"
+                     step="0.01"
+                     required>
+
+              <button class="border bg-blue-400 hover: bg-blue-600 text-white"
+                      type="submit">
+                     Guardar producto
+              </button>
+       </form>
+       <div id="respuesta_crear_producto"></div>
+       <button hx-get="/products"
+               hx-target="#respuesta_listar_productos"
+               hx-swap="innerHTML"
+               class="w-full bg-blue-600 text-white rounded"
+               type="submit">
+              Listar Productos
+       </button>
+       <input type="search"
+              name="q"
+              placeholder="Buscar..."
+              class="w-full mb-3 p-2 border rounded"
+              hx-get="/products"
+              hx-trigger="input changed delay:300ms"
+              hx-target="#respuesta_listar_productos"
+              hx-swap="innerHTML">
+       <div class="grid grid-cols-1"
+            id="respuesta_listar_productos"></div>
+</section>
+
+<section>
+    <form hx-post="/procesar"
+          hx-encoding="multipart/form-data"
+          hx-target="#resultado_procesar"
+          hx-swap="innerHTML"
+          class="max-w-md space-y-4">
+
+        <input type="file"
+               name="file"
+               accept=".csv,.xlsx"
+               class="block w-full rounded border p-2">
+
+        <button type="submit"
+                hx-disabled-elt="this"
+                class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50">
+            Procesar archivo
+        </button>
+    </form>
+
+    <div id="resultado_procesar"
+         class="mt-6"></div>
+</section>
+
+
+<section>
+    <form hx-post="/procesar_retornar"
+          hx-encoding="multipart/form-data"
+          class="max-w-md space-y-4">
+
+        <input type="file"
+               name="file"
+               accept=".xlsx"
+               class="block w-full rounded border p-2">
+
+        <button type="submit"
+                hx-disabled-elt="this"
+                class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50">
+            Procesar y retornar xlsx
+        </button>
+    </form>
+</section>
+
+
+<section>
+    <form hx-post="/procesar_csv"
+          hx-encoding="multipart/form-data"
+          class="max-w-md space-y-4">
+
+        <input type="file"
+               name="file"
+               accept=".csv"
+               class="block w-full rounded border p-2">
+
+        <button type="submit"
+                hx-disabled-elt="this"
+                class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50">
+            Procesar y retornar csv
+        </button>
+    </form>
+</section>
+{% endblock %}
