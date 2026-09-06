@@ -1,0 +1,36 @@
+<tr class="bg-white hover:bg-slate-100">
+
+    <td class="border border-slate-300 p-2">
+        {{ product.id }}
+    </td>
+
+    <td class="border border-slate-300 p-2">
+        {{ product.name }}
+    </td>
+
+    <td class="border border-slate-300 p-2">
+        ${{ product.price }}
+    </td>
+
+    <td class="border border-slate-300 p-2">
+        <div class="flex gap-2">
+
+            <button hx-get="/products/{{ product.id }}/edit"
+                    hx-target="closest tr"
+                    hx-swap="outerHTML"
+                    class="rounded bg-blue-600 px-3 py-1 text-white">
+                Editar
+            </button>
+
+            <button hx-delete="/products/{{ product.id }}"
+                    hx-target="closest tr"
+                    hx-swap="outerHTML"
+                    hx-confirm="¿Estás seguro de que quieres eliminar este producto?"
+                    class="rounded bg-red-600 px-3 py-1 text-white">
+                Eliminar
+            </button>
+
+        </div>
+    </td>
+
+</tr>

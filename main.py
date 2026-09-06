@@ -4,7 +4,7 @@ from io import BytesIO, StringIO
 from typing import Annotated
 
 import pandas as pd
-from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
+from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile, Response
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import StreamingResponse
@@ -53,7 +53,10 @@ async def hola():
     return "<p class='text-center'>Hola</p>"
 
 
-@app.post("/products")
+from fastapi.responses import HTMLResponse
+
+
+@app.post("/products", response_class=HTMLResponse)
 def create_product(
     name: str = Form(...),
     price: float = Form(...),
@@ -73,7 +76,22 @@ def create_product(
         session.commit()
         session.refresh(product)
 
-    return product
+    return "Producto creado correctamente"
+
+
+@app.get("/products/{product_id}", response_class=HTMLResponse)
+def get_product(request: Request, product_id: int):
+    with Session(engine) as session:
+        product = session.get(Product, product_id)
+
+        if not product:
+            raise HTTPException(status_code=404, detail="Producto no encontrado")
+
+        return templates.TemplateResponse(
+            request=request,
+            name="components/fila_producto.html",
+            context={"product": product},
+        )
 
 
 @app.get("/products", response_class=HTMLResponse)
@@ -106,6 +124,68 @@ def get_products(request: Request, q: str = ""):
             name="components/listar_productos.html",
             context={"products": products},
         )
+
+
+@app.get("/products/{product_id}/edit", response_class=HTMLResponse)
+def edit_product_form(request: Request, product_id: int):
+    with Session(engine) as session:
+        product = session.get(Product, product_id)
+
+        if not product:
+            raise HTTPException(status_code=404, detail="Producto no encontrado")
+
+        return templates.TemplateResponse(
+            request=request,
+            name="components/editar_producto.html",
+            context={"product": product},
+        )
+
+
+@app.post("/products/{product_id}", response_class=HTMLResponse)
+def update_product(
+    request: Request,
+    product_id: int,
+    name: str = Form(...),
+    price: float = Form(...),
+):
+    with Session(engine) as session:
+        product = session.get(Product, product_id)
+
+        if not product:
+            raise HTTPException(
+                status_code=404,
+                detail="Producto no encontrado"
+            )
+
+        product.name = name
+        product.price = price
+
+        session.add(product)
+        session.commit()
+        session.refresh(product)
+
+        return templates.TemplateResponse(
+            request=request,
+            name="components/fila_producto.html",
+            context={"product": product},
+        )
+
+
+@app.delete("/products/{product_id}")
+def delete_product(product_id: int):
+    with Session(engine) as session:
+        product = session.get(Product, product_id)
+
+        if not product:
+            raise HTTPException(
+                status_code=404,
+                detail="Producto no encontrado"
+            )
+
+        session.delete(product)
+        session.commit()
+
+    return Response(status_code=200)
 
 
 # Crear endpoint para recibir y procesar archivos csv, excel y retornar texto

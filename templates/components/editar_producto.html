@@ -1,0 +1,53 @@
+<tr>
+    <td class="border border-slate-300 p-2">
+        {{ product.id }}
+    </td>
+
+    <td class="border border-slate-300 p-2">
+        <input
+            type="text"
+            name="name"
+            value="{{ product.name }}"
+            form="form-editar-{{ product.id }}"
+            class="w-full border rounded px-2 py-1"
+        >
+    </td>
+
+    <td class="border border-slate-300 p-2">
+        <input
+            type="number"
+            name="price"
+            value="{{ product.price }}"
+            step="0.01"
+            form="form-editar-{{ product.id }}"
+            class="w-full border rounded px-2 py-1"
+        >
+    </td>
+
+    <td class="border border-slate-300 p-2">
+
+        <form
+            id="form-editar-{{ product.id }}"
+            hx-post="/products/{{ product.id }}"
+            hx-target="closest tr"
+            hx-swap="outerHTML"
+            class="flex gap-2"
+        >
+            <button
+                type="submit"
+                class="rounded bg-green-600 px-3 py-1 text-white">
+                Guardar
+            </button>
+
+            <button
+                type="button"
+                hx-get="/products/{{ product.id }}"
+                hx-target="closest tr"
+                hx-swap="outerHTML"
+                class="rounded bg-slate-400 px-3 py-1 text-white">
+                Cancelar
+            </button>
+        </form>
+
+    </td>
+</tr>

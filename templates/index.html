@@ -46,9 +46,7 @@
 <section>
        <h1 class="text-center font-bold text-3xl">Agregar producto</h1>
        <form class="grid grid-cols-1 px-8 gap-2"
-             hx-post="/products"
-             hx-target="#respuesta_crear_producto"
-             hx-swap="innerHTML">
+             hx-post="/products">
               <label for="name">Nombre:</label>
               <input class="border"
                      type="text"
@@ -69,7 +67,7 @@
                      Guardar producto
               </button>
        </form>
-       <div id="respuesta_crear_producto"></div>
+
        <button hx-get="/products"
                hx-target="#respuesta_listar_productos"
                hx-swap="innerHTML"

@@ -1,21 +1,5 @@
-<div class="p-4">
-    <table class="w-full border-collapse border border-slate-300">
-        <thead class="bg-slate-800 text-white">
-            <tr>
-                <th class="border border-slate-300 p-2">ID</th>
-                <th class="border border-slate-300 p-2">NOMBRE</th>
-                <th class="border border-slate-300 p-2">PRECIO</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            {% for product in products %}
-            <tr class="bg-white hover:bg-slate-100">
-                <td class="border border-slate-300 p-2">{{ product.id }}</td>
-                <td class="border border-slate-300 p-2">{{ product.name }}</td>
-                <td class="border border-slate-300 p-2">${{ product.price }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+<tbody>
+    {% for product in products %}
+        {% include "components/fila_producto.html" %}
+    {% endfor %}
+</tbody>
